@@ -6,8 +6,8 @@ from solver_greedy import distance
 
 def tour_dist(tour,array,N):
     dist = 0
-    for i in range(N-1):
-        dist += array[tour[i]][tour[i+1]]
+    
+    dist = sum(array[tour[i]][tour[i+1]] for i in range(N-1))
     dist += array[tour[0]][tour[N-1]]
     print('BEST DISTANCE IS',dist)
 
@@ -27,8 +27,7 @@ def opt_2(tour,array,N):
                     dist3 = array[tour[i1]][tour[j1]]
                     dist4 = array[tour[i2]][tour[j2]]
                     if dist1 + dist2 > dist3 + dist4:
-                        new_tour = tour[i2:j1+1]
-                        tour[i2:j1+1] = new_tour[::-1]
+                        tour[i2:j1+1] = reversed(tour[i2:j1+1])
                         count += 1
         if count == 0:
             break
