@@ -39,7 +39,32 @@ def or_opt(tour,array,N):
         for i1 in range(N):
             i0 = i1 - 1
             i2 = i1 + 1
-            #編集中 
+            if i0 < 0:
+                i0 = N - 1
+            if i2 == N:
+                i2 = 0
+            for j1 in range(N):
+                j2 = j1 + 1
+                if j2 == N:
+                    j2 = 0
+                if j1 != i1 and j2 != i1:
+                    dist1 = array[tour[i0]][tour[i1]]
+                    dist2 = array[tour[i1]][tour[i2]]
+                    dist3 = array[tour[j1]][tour[j2]]
+                    dist4 = array[tour[i0]][tour[i2]]
+                    dist5 = array[tour[j1]][tour[i1]]
+                    dist6 = array[tour[i1]][tour[j2]]
+                    if dist1 + dist2 + dist3 > dist4 + dist5 + dist6:
+                        city_insert = tour[i1]
+                        del tour[i1]
+                        if i1 > j1:
+                            tour.insert(j2,city_insert)
+                        else:
+                            tour.insert(j1,city_insert)
+                        count += 1
+        if count == 0:
+            break
+    return tour
     
 def solve(cities):
     N = len(cities)
@@ -51,9 +76,9 @@ def solve(cities):
     tour_dist(tour,dist_array,N)
     tour2 = opt_2(tour,dist_array,N)
     tour_dist(tour2,dist_array,N)
-    #tour3 = or_opt(tour,dist_array,N)
-
-    return tour2
+    tour3 = or_opt(tour,dist_array,N)
+    tour_dist(tour3,dist_array,N)
+    return tour3
 
 
 
